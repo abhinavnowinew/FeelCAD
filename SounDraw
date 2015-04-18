@@ -1,0 +1,56 @@
+/**
+Press Left Mouse button to start drawing sketches. You will recieve audio feedback of whatever you draw. 
+  */
+
+import ddf.minim.*;
+import ddf.minim.ugens.*;
+
+Minim minim;
+AudioOutput out;
+
+float[] t = new float[10000]; 
+float[] d = new float[10000];
+float[] f = new float[10000];
+float px, py, p, q;
+void setup()
+{
+  size(1000, 600, P3D);
+  
+  minim = new Minim(this);
+  
+  // use the getLineOut method of the Minim object to get an AudioOutput object
+  out = minim.getLineOut();
+  background(0);
+}
+
+void draw()
+{
+   
+  if(mousePressed)
+  { stroke(255);
+     line(px, py, mouseX, mouseY);
+    
+
+  out.setTempo( 80 );
+  
+  
+  out.pauseNotes();
+  
+  // given start time, duration, and frequency
+ 
+  
+  out.playNote(5*mouseY);
+  p=width/2;
+  q=mouseX-p;
+  p=q/p;
+  println(p);
+  out.setPan(p);
+delay(4);
+  // now we can start the sequencer again to hear our sequence
+  out.resumeNotes();
+  }
+  px=mouseX;
+     py=mouseY;
+  
+
+}
